@@ -1,61 +1,90 @@
 <%- include('../partials/header') %>
 
-<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-  <h1>📦 Item Saya</h1>
-  <a href="/items/add" class="btn btn-success">+ Tambah Item</a>
-</div>
-
-<% if (typeof message !== 'undefined' && message) { %>
-  <div class="alert alert-success"><%= message %></div>
-<% } %>
-
-<% if (typeof errors !== 'undefined' && errors && errors.length > 0) { %>
-  <ul class="errors">
-    <% errors.forEach(e => { %><li><%= e %></li><% }) %>
-  </ul>
-<% } %>
-
-<% if (items.length === 0) { %>
-  <div class="card" style="text-align:center; padding:40px; color:#999;">
-    <p style="font-size:40px;">📦</p>
-    <p>Kamu belum punya item. Mulai jual sekarang!</p>
-    <a href="/items/add" class="btn btn-success" style="margin-top:12px;">+ Tambah Item</a>
+<div class="page-content">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+    <h1>📦 Item Saya</h1>
+    <a href="/items/add" class="btn btn-success">+ Tambah Item</a>
   </div>
-<% } else { %>
-  <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px;">
-    <% items.forEach(item => { %>
-      <div class="card" style="padding:0; overflow:hidden;">
-        <% if (item.imageUrl) { %>
-          <img src="<%= item.imageUrl %>" alt="<%= item.name %>" style="width:100%; height:160px; object-fit:cover;">
-        <% } else { %>
-          <div style="height:100px; background:linear-gradient(135deg,#667eea,#764ba2); display:flex; align-items:center; justify-content:center; font-size:40px;">📦</div>
-        <% } %>
-        <div style="padding:16px;">
-          <h3 style="font-size:15px; margin-bottom:6px;"><%= item.name %></h3>
-          <p style="font-size:18px; font-weight:bold; color:#e74c3c; margin-bottom:8px;"><%= formatRupiah(item.price) %></p>
 
-          <!-- Tags -->
-          <% if (item.Tags && item.Tags.length > 0) { %>
-            <div style="margin-bottom:8px;">
-              <% item.Tags.forEach(tag => { %><span class="badge">#<%= tag.name %></span><% }) %>
-            </div>
+  <% if (typeof message !== 'undefined' && message) { %>
+    <div class="alert alert-success"><%= message %></div>
+  <% } %>
+
+  <% if (typeof errors !== 'undefined' && errors && errors.length > 0) { %>
+    <ul class="errors">
+      <% errors.forEach(e => { %><li><%= e %></li><% }) %>
+    </ul>
+  <% } %>
+
+  <% if (items.length === 0) { %>
+    <div class="card" style="text-align:center; padding:40px; color:#999;">
+      <p style="font-size:40px;">📦</p>
+      <p>Kamu belum punya item. Mulai jual sekarang!</p>
+      <a href="/items/add" class="btn btn-success" style="margin-top:12px;">+ Tambah Item</a>
+    </div>
+  <% } else { %>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px;">
+      <% items.forEach(item => { %>
+        <div class="card" style="padding:0; overflow:hidden;">
+          <% if (item.imageUrl) { %>
+            <img src="<%= item.imageUrl %>" alt="<%= item.name %>" style="width:100%; height:160px; object-fit:cover;">
+          <% } else { %>
+            <div style="height:100px; background:#2c3e50; display:flex; align-items:center; justify-content:center; font-size:40px;">📦</div>
           <% } %>
-
-          <p style="font-size:12px; color:#888; margin-bottom:12px;">
-            Kondisi: <%= item.condition === 'new' ? 'Baru' : item.condition === 'like_new' ? 'Seperti Baru' : item.condition === 'good' ? 'Bagus' : 'Cukup' %>
-            &nbsp;|&nbsp; Stok: <%= item.stock %>
-          </p>
-
-          <div style="display:flex; gap:8px;">
-            <a href="/items/<%= item.id %>/edit" class="btn btn-warning" style="flex:1; text-align:center;">✏️ Edit</a>
-            <form method="POST" action="/items/<%= item.id %>/delete" style="flex:1;" onsubmit="return confirm('Yakin hapus item ini?')">
-              <button type="submit" class="btn btn-danger" style="width:100%;">🗑️ Hapus</button>
-            </form>
+          <div style="padding:16px;">
+            <h3 style="font-size:15px; margin-bottom:6px;"><%= item.name %></h3>
+            <p style="font-size:18px; font-weight:bold; color:#e74c3c; margin-bottom:8px;"><%= formatRupiah(item.price) %></p>
+            <% if (item.Tags && item.Tags.length > 0) { %>
+              <div style="margin-bottom:8px;">
+                <% item.Tags.forEach(tag => { %><span class="badge">#<%= tag.name %></span><% }) %>
+              </div>
+            <% } %>
+            <p style="font-size:12px; color:#888; margin-bottom:12px;">
+              Kondisi: <%= item.condition === 'new' ? 'Baru' : item.condition === 'like_new' ? 'Seperti Baru' : item.condition === 'good' ? 'Bagus' : 'Cukup' %>
+              &nbsp;|&nbsp; Stok: <%= item.stock %>
+            </p>
+            <div style="display:flex; gap:8px;">
+              <a href="/items/<%= item.id %>/edit" class="btn btn-warning" style="flex:1; text-align:center;">✏️ Edit</a>
+              <button onclick="showDeleteModal('<%= item.id %>', '<%= item.name %>')" class="btn btn-danger" style="flex:1;">🗑️ Hapus</button>
+            </div>
           </div>
         </div>
-      </div>
-    <% }) %>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
+
+<!-- custom modal -->
+<div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999; align-items:center; justify-content:center;">
+  <div style="background:white; border-radius:12px; padding:28px; max-width:400px; width:90%; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+    <p style="font-size:40px; margin-bottom:12px;">🗑️</p>
+    <h3 style="margin-bottom:8px; color:#2c3e50;">Hapus Item</h3>
+    <p style="color:#666; font-size:14px; margin-bottom:8px;">Yakin ingin menghapus <strong id="deleteItemName"></strong>?</p>
+    <p style="color:#e74c3c; font-size:13px; margin-bottom:24px;">Tindakan ini tidak bisa dibatalkan.</p>
+    <div style="display:flex; gap:12px; justify-content:center;">
+      <button onclick="closeDeleteModal()" class="btn" style="background:#95a5a6; color:white; padding:10px 24px;">Batal</button>
+      <form id="deleteForm" method="POST">
+        <button type="submit" class="btn btn-danger" style="padding:10px 24px;">Ya, Hapus</button>
+      </form>
+    </div>
   </div>
-<% } %>
+</div>
+
+<script>
+  function showDeleteModal(id, name) {
+    document.getElementById('deleteItemName').textContent = name;
+    document.getElementById('deleteForm').action = '/items/' + id + '/delete';
+    const modal = document.getElementById('deleteModal');
+    modal.style.display = 'flex';
+  }
+
+  function closeDeleteModal() {
+    document.getElementById('deleteModal').style.display = 'none';
+  }
+
+  document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) closeDeleteModal();
+  });
+</script>
 
 <%- include('../partials/footer') %>
