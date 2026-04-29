@@ -104,6 +104,35 @@ class ItemController {
       res.redirect(`/items?errors=${encodeURIComponent(error.message)}`);
     }
   }
+
+    // GET /items/detail/:id
+  static async showDetail(req, res) {
+    try {
+      // eager loading
+      const item = await Item.findByPk(req.params.id, {
+        include: [
+          { model: User, include: [UserProfile] },
+          { model: Tag }
+        ]
+      });
+
+      if (!item) {
+        return res.redirect(`/?errors=${encodeURIComponent('Item tidak ditemukan')}`);
+      }
+
+      const { message } = req.query;
+
+      res.render('items/detail', {
+        title: item.name,
+        item,
+        message,
+        formatRupiah,
+        formatDate
+      });
+    } catch (error) {
+      res.redirect(`/?errors=${encodeURIComponent(error.message)}`);
+    }
+  }
  
   // GET /items/add
   static async showAdd(req, res) {
@@ -226,6 +255,7 @@ class ItemController {
       res.redirect(`/items?errors=${encodeURIComponent(error.message)}`);
     }
   }
+
 }
  
 module.exports = ItemController;

@@ -14,6 +14,9 @@ router.get('/logout', authController.logout);
  
 // Landing page - GET route 1
 router.get('/', itemController.index);
+
+//detail 
+router.get('/items/detail/:id', itemController.showDetail);
  
 // Item routes (seller only) - GET route 2
 router.get('/items', isAuthenticated, isSeller, itemController.myItems);
