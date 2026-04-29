@@ -1,4 +1,3 @@
-
 'use strict';
 const { Item, User, UserProfile, Tag } = require('../models');
 const { formatRupiah, formatDate, truncate } = require('../helpers/format');
@@ -33,7 +32,7 @@ class ItemController {
   // GET /
   static async index(req, res) {
     try {
-      const { search, sort, message } = req.query;
+      const { search, sort, message, errors } = req.query;
       const where = {};
       const order = [];
  
@@ -70,12 +69,24 @@ class ItemController {
         search,
         sort,
         message,
+        errors,
         formatRupiah,
         formatDate,
         truncate
       });
     } catch (error) {
-      res.redirect(`/?errors=${encodeURIComponent(error.message)}`);
+      res.render('index', {
+        title: 'Prelovetinaja - Jual Beli Barang Preloved',
+        items: [],
+        tags: [],
+        search: '',
+        sort: '',
+        message: null,
+        errors: error.message,
+        formatRupiah,
+        formatDate,
+        truncate
+      });
     }
   }
  
@@ -104,8 +115,8 @@ class ItemController {
       res.redirect(`/items?errors=${encodeURIComponent(error.message)}`);
     }
   }
-
-    // GET /items/detail/:id
+ 
+  // GET /items/detail/:id
   static async showDetail(req, res) {
     try {
       // eager loading
@@ -115,13 +126,13 @@ class ItemController {
           { model: Tag }
         ]
       });
-
+ 
       if (!item) {
         return res.redirect(`/?errors=${encodeURIComponent('Item tidak ditemukan')}`);
       }
-
+ 
       const { message } = req.query;
-
+ 
       res.render('items/detail', {
         title: item.name,
         item,
@@ -255,7 +266,6 @@ class ItemController {
       res.redirect(`/items?errors=${encodeURIComponent(error.message)}`);
     }
   }
-
 }
  
 module.exports = ItemController;

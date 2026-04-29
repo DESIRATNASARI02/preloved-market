@@ -142,7 +142,13 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 
-# data yang tidak perlu di push 
+# data yang tidak perlu di push
 *.docx
 *.zip
+*.jpeg
+*.jpg
 ~$*
+
+# uploads folder
+public/uploads/*
+!public/uploads/.gitkeep

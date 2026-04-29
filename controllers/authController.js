@@ -22,6 +22,11 @@ class AuthController {
     try {
       const { email, password, name, phone, role } = req.body;
  
+      // validasi phone wajib untuk seller
+      if (role === 'seller' && !phone) {
+        return res.redirect(`/register?errors=${encodeURIComponent('No. Handphone tidak boleh kosong')}`);
+      }
+ 
       const user = await User.create({ email, password, role: role || 'buyer' });
       await UserProfile.create({ UserId: user.id, name, phone });
  

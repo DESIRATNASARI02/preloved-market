@@ -1,6 +1,5 @@
 <%- include('partials/header') %>
 
-<!-- hero section - full width di luar container -->
 <div class="hero">
   <h1 style="font-size: 32px; color: white; margin-bottom: 10px;">Jual Beli Barang Preloved Terpercaya</h1>
   <p style="color: #bdc3c7; font-size: 15px; margin-bottom: 24px;">Temukan barang berkualitas dengan harga terbaik, atau jual barang yang sudah tidak terpakai.</p>
@@ -16,11 +15,16 @@
 
 <div class="page-content">
 
+  <% if (typeof errors !== 'undefined' && errors) { %>
+    <div class="alert" style="background:#f8d7da; color:#721c24; border:1px solid #f5c6cb;">
+      <%= errors %>
+    </div>
+  <% } %>
+
   <% if (typeof message !== 'undefined' && message) { %>
     <div class="alert alert-success"><%= message %></div>
   <% } %>
 
-  <!-- feature section -->
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
     <div class="card" style="text-align: center; padding: 20px;">
       <p style="font-size: 32px; margin-bottom: 8px;">🛍️</p>
@@ -39,7 +43,6 @@
     </div>
   </div>
 
-  <!-- search & sort -->
   <div id="items" class="card" style="padding: 16px; margin-bottom: 16px;">
     <form method="GET" action="/" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;">
       <div style="flex: 1; min-width: 200px;">
@@ -64,7 +67,6 @@
     </form>
   </div>
 
-  <!-- tags filter -->
   <% if (tags && tags.length > 0) { %>
     <div style="margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
       <span style="font-size: 13px; color: #888;">Kategori:</span>
