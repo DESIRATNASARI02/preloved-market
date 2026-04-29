@@ -1,0 +1,47 @@
+[
+  {
+    "name": "iPhone 11 Second Mulus",
+    "description": "Kondisi 95%, baterai 90%, no minus. Lengkap dengan dus.",
+    "price": 3500000,
+    "stock": 1,
+    "condition": "like_new",
+    "imageUrl": null,
+    "UserId": 1
+  },
+  {
+    "name": "Jaket Denim Vintage Levis",
+    "description": "Ukuran L, masih bagus, warna tidak pudar.",
+    "price": 150000,
+    "stock": 2,
+    "condition": "good",
+    "imageUrl": null,
+    "UserId": 1
+  },
+  {
+    "name": "Kursi Gaming Bekas",
+    "description": "Masih sangat nyaman, ada sedikit baret di sandaran.",
+    "price": 800000,
+    "stock": 1,
+    "condition": "fair",
+    "imageUrl": null,
+    "UserId": 2
+  },
+  {
+    "name": "Sepatu Lari Nike Size 42",
+    "description": "Dipakai 3x, kondisi seperti baru. Sol masih tebal.",
+    "price": 350000,
+    "stock": 1,
+    "condition": "like_new",
+    "imageUrl": null,
+    "UserId": 2
+  },
+  {
+    "name": "Novel Harry Potter Set",
+    "description": "Seri 1-7, kondisi bagus, cover lengkap.",
+    "price": 200000,
+    "stock": 1,
+    "condition": "good",
+    "imageUrl": null,
+    "UserId": 1
+  }
+]

@@ -1,0 +1,70 @@
+<%- include('../partials/header') %>
+
+<div style="max-width:600px; margin:0 auto;">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+    <h2>✏️ Edit Barang</h2>
+    <a href="/items" class="btn" style="background:#95a5a6;color:white;">← Kembali</a>
+  </div>
+
+  <div class="card">
+    <% if (typeof errors !== 'undefined' && errors && errors.length > 0) { %>
+      <ul class="errors">
+        <% errors.forEach(e => { %><li><%= e %></li><% }) %>
+      </ul>
+    <% } %>
+
+    <form method="POST" action="/items/<%= item.id %>/edit" enctype="multipart/form-data">
+      <input type="hidden" name="existingImageUrl" value="<%= item.imageUrl || '' %>">
+      <div class="form-group">
+        <label>Nama Barang *</label>
+        <input type="text" name="name" class="form-control" required value="<%= item.name %>">
+      </div>
+      <div class="form-group">
+        <label>Deskripsi</label>
+        <textarea name="description" class="form-control" rows="3"><%= item.description || '' %></textarea>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label>Harga (Rp) *</label>
+          <input type="number" name="price" class="form-control" required value="<%= item.price %>">
+        </div>
+        <div class="form-group">
+          <label>Stok</label>
+          <input type="number" name="stock" class="form-control" value="<%= item.stock %>" min="1">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Kondisi Barang</label>
+        <select name="condition" class="form-control">
+          <option value="new" <%= item.condition === 'new' ? 'selected' : '' %>>🆕 Baru</option>
+          <option value="like_new" <%= item.condition === 'like_new' ? 'selected' : '' %>>✨ Seperti Baru</option>
+          <option value="good" <%= item.condition === 'good' ? 'selected' : '' %>>👍 Bagus</option>
+          <option value="fair" <%= item.condition === 'fair' ? 'selected' : '' %>>👌 Cukup</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tags</label>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <% tags.forEach(tag => { %>
+            <label style="display:flex; align-items:center; gap:6px; cursor:pointer; padding:6px 12px; background:#f0f4f8; border-radius:20px; font-size:13px;">
+              <input type="checkbox" name="tagIds" value="<%= tag.id %>" <%= selectedTagIds.includes(tag.id) ? 'checked' : '' %>> #<%= tag.name %>
+            </label>
+          <% }) %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>📷 Ganti Foto (kosongkan jika tidak ingin ganti)</label>
+        <% if (item.imageUrl) { %>
+          <div style="margin-bottom:8px;">
+            <img src="<%= item.imageUrl %>" style="height:100px; border-radius:6px;">
+          </div>
+        <% } %>
+        <input type="file" name="image" accept="image/*" class="form-control" style="padding:8px;">
+        <small style="color:#999;">Format: JPG, PNG, WebP. Max 2MB</small>
+      </div>
+      <button type="submit" class="btn btn-warning" style="width:100%; padding:12px; font-size:15px;">💾 Simpan Perubahan</button>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

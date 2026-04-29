@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Preloved Market</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; color: #333; }
+    nav { background: #2c3e50; color: white; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    nav a { color: white; text-decoration: none; margin-left: 12px; font-size: 14px; }
+    nav a:hover { color: #f39c12; }
+    .logo { font-size: 22px; font-weight: bold; color: #f39c12; }
+    .nav-btn { padding: 8px 20px; border-radius: 6px; font-size: 14px; font-weight: 600; }
+    .nav-btn-login { border: 1.5px solid white; color: white; }
+    .nav-btn-login:hover { background: white; color: #2c3e50 !important; }
+    .nav-btn-register { background: #e74c3c; color: white !important; border: 1.5px solid #e74c3c; }
+    .nav-btn-register:hover { background: #c0392b !important; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+    .alert { padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; }
+    .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .btn { padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; font-size: 14px; text-decoration: none; display: inline-block; }
+    .btn-primary { background: #3498db; color: white; }
+    .btn-success { background: #27ae60; color: white; }
+    .btn-danger { background: #e74c3c; color: white; }
+    .btn-warning { background: #f39c12; color: white; }
+    .btn:hover { opacity: 0.85; }
+    .card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 16px; }
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 12px; background: #e8f4fd; color: #2980b9; margin: 2px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+    .form-control { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+    .form-control:focus { outline: none; border-color: #3498db; }
+    h1 { margin-bottom: 20px; color: #2c3e50; }
+    h2 { margin-bottom: 16px; color: #2c3e50; }
+    .errors { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; }
+    .errors li { margin-left: 16px; }
+    .hero { background: #2c3e50; color: white; padding: 60px 24px; text-align: center; }
+    .page-content { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">🛍️ Preloved Market</a>
+  <div style="display: flex; align-items: center;">
+    <% if (currentUser) { %>
+      <span style="font-size: 13px; color: #bdc3c7;">👤 <%= currentUser.name %> (<%= currentUser.role %>)</span>
+      <% if (currentUser.role === 'seller') { %>
+        <a href="/items" class="nav-btn" style="margin-left: 12px; padding: 6px 14px; border: 1.5px solid #bdc3c7; border-radius: 6px; font-size: 13px;">My Items</a>
+        <a href="/items/add" class="nav-btn nav-btn-register" style="margin-left: 8px;">+ Jual</a>
+      <% } %>
+      <a href="/logout" class="nav-btn nav-btn-login" style="margin-left: 8px;">Logout</a>
+    <% } else { %>
+      <a href="/login" class="nav-btn nav-btn-login" style="margin-left: 12px;">Masuk</a>
+      <a href="/register" class="nav-btn nav-btn-register" style="margin-left: 8px;">Daftar</a>
+    <% } %>
+  </div>
+</nav>

@@ -1,0 +1,23 @@
+[
+  {
+    "UserId": 1,
+    "name": "Budi Santoso",
+    "phone": "081234567890",
+    "address": "Jakarta Selatan",
+    "bio": "Jual barang preloved berkualitas tinggi"
+  },
+  {
+    "UserId": 2,
+    "name": "Ani Wijaya",
+    "phone": "082345678901",
+    "address": "Bandung",
+    "bio": "Seller terpercaya sejak 2020"
+  },
+  {
+    "UserId": 3,
+    "name": "Citra Buyer",
+    "phone": "083456789012",
+    "address": "Surabaya",
+    "bio": "Suka berburu barang murah"
+  }
+]

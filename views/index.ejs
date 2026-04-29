@@ -1,0 +1,124 @@
+<%- include('partials/header') %>
+
+<!-- hero section - full width di luar container -->
+<div class="hero">
+  <h1 style="font-size: 32px; color: white; margin-bottom: 10px;">Jual Beli Barang Preloved Terpercaya</h1>
+  <p style="color: #bdc3c7; font-size: 15px; margin-bottom: 24px;">Temukan barang berkualitas dengan harga terbaik, atau jual barang yang sudah tidak terpakai.</p>
+  <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+    <a href="#items" class="btn" style="background: #e74c3c; color: white; padding: 12px 28px; font-size: 15px;">Mulai Belanja</a>
+    <% if (!currentUser) { %>
+      <a href="/register" class="btn" style="background: transparent; color: white; border: 1px solid white; padding: 12px 28px; font-size: 15px;">Mulai Jual</a>
+    <% } else if (currentUser.role === 'seller') { %>
+      <a href="/items/add" class="btn" style="background: #27ae60; color: white; padding: 12px 28px; font-size: 15px;">+ Jual Barang</a>
+    <% } %>
+  </div>
+</div>
+
+<div class="page-content">
+
+  <% if (typeof message !== 'undefined' && message) { %>
+    <div class="alert alert-success"><%= message %></div>
+  <% } %>
+
+  <!-- feature section -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+    <div class="card" style="text-align: center; padding: 20px;">
+      <p style="font-size: 32px; margin-bottom: 8px;">🛍️</p>
+      <p style="font-weight: 600; margin-bottom: 4px;">Barang Berkualitas</p>
+      <p style="font-size: 13px; color: #888;">Barang preloved pilihan dari seller terpercaya</p>
+    </div>
+    <div class="card" style="text-align: center; padding: 20px;">
+      <p style="font-size: 32px; margin-bottom: 8px;">🔒</p>
+      <p style="font-weight: 600; margin-bottom: 4px;">Transaksi Aman</p>
+      <p style="font-size: 13px; color: #888;">Sistem login aman dengan enkripsi password</p>
+    </div>
+    <div class="card" style="text-align: center; padding: 20px;">
+      <p style="font-size: 32px; margin-bottom: 8px;">💰</p>
+      <p style="font-weight: 600; margin-bottom: 4px;">Harga Terbaik</p>
+      <p style="font-size: 13px; color: #888;">Hemat lebih banyak dengan barang second berkualitas</p>
+    </div>
+  </div>
+
+  <!-- search & sort -->
+  <div id="items" class="card" style="padding: 16px; margin-bottom: 16px;">
+    <form method="GET" action="/" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;">
+      <div style="flex: 1; min-width: 200px;">
+        <label style="font-size: 13px; font-weight: 600;">🔍 Cari Barang</label>
+        <input type="text" name="search" value="<%= typeof search !== 'undefined' && search ? search : '' %>" placeholder="Nama barang..." class="form-control" style="margin-top: 4px;">
+      </div>
+      <div>
+        <label style="font-size: 13px; font-weight: 600;">📊 Urutkan</label>
+        <select name="sort" class="form-control" style="margin-top: 4px;">
+          <option value="">Terbaru</option>
+          <option value="price_asc" <%= typeof sort !== 'undefined' && sort === 'price_asc' ? 'selected' : '' %>>Harga Termurah</option>
+          <option value="price_desc" <%= typeof sort !== 'undefined' && sort === 'price_desc' ? 'selected' : '' %>>Harga Termahal</option>
+          <option value="oldest" <%= typeof sort !== 'undefined' && sort === 'oldest' ? 'selected' : '' %>>Terlama</option>
+        </select>
+      </div>
+      <div>
+        <button type="submit" class="btn btn-primary">Cari</button>
+        <% if ((typeof search !== 'undefined' && search) || (typeof sort !== 'undefined' && sort)) { %>
+          <a href="/" class="btn" style="background: #95a5a6; color: white;">Reset</a>
+        <% } %>
+      </div>
+    </form>
+  </div>
+
+  <!-- tags filter -->
+  <% if (tags && tags.length > 0) { %>
+    <div style="margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+      <span style="font-size: 13px; color: #888;">Kategori:</span>
+      <% tags.forEach(tag => { %>
+        <a href="/?search=<%= tag.name %>" style="padding: 5px 14px; background: #f0f4f8; border-radius: 20px; font-size: 13px; color: #2c3e50; text-decoration: none;">#<%= tag.name %></a>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <% if (typeof search !== 'undefined' && search) { %>
+    <p style="color: #666; margin-bottom: 16px;">Hasil: "<strong><%= search %></strong>" — <%= items.length %> barang ditemukan</p>
+  <% } %>
+
+  <h2 style="margin-bottom: 16px;">Barang Terbaru</h2>
+
+  <% if (items.length === 0) { %>
+    <div class="card" style="text-align: center; padding: 40px; color: #999;">
+      <p style="font-size: 40px;">📦</p>
+      <p>Belum ada barang yang dijual.</p>
+      <% if (!currentUser) { %>
+        <a href="/register" class="btn btn-primary" style="margin-top: 12px;">Daftar sebagai Seller</a>
+      <% } %>
+    </div>
+  <% } else { %>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px;">
+      <% items.forEach(item => { %>
+        <div class="card" style="padding: 0; overflow: hidden;">
+          <% if (item.imageUrl) { %>
+            <img src="<%= item.imageUrl %>" alt="<%= item.name %>" style="width: 100%; height: 180px; object-fit: cover;">
+          <% } else { %>
+            <div style="height: 120px; background: #2c3e50; display: flex; align-items: center; justify-content: center; font-size: 48px;">📦</div>
+          <% } %>
+          <div style="padding: 16px;">
+            <h3 style="font-size: 15px; margin-bottom: 6px;"><%= item.name %></h3>
+            <p style="color: #666; font-size: 13px; margin-bottom: 8px;"><%= truncate(item.description, 70) %></p>
+            <p style="font-size: 18px; font-weight: bold; color: #e74c3c; margin-bottom: 8px;"><%= formatRupiah(item.price) %></p>
+            <% if (item.Tags && item.Tags.length > 0) { %>
+              <div style="margin-bottom: 8px;">
+                <% item.Tags.forEach(tag => { %><span class="badge">#<%= tag.name %></span><% }) %>
+              </div>
+            <% } %>
+            <div style="border-top: 1px solid #f0f0f0; padding-top: 8px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <p style="font-size: 12px; color: #888;">👤 <strong><%= item.User && item.User.UserProfile ? item.User.UserProfile.name : item.User.email %></strong></p>
+                <p style="font-size: 11px; color: #bbb; margin-top: 2px;">📅 <%= formatDate(item.createdAt) %></p>
+              </div>
+              <a href="/items/detail/<%= item.id %>" class="btn btn-primary" style="font-size: 12px; padding: 6px 12px;">Detail</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+</div>
+
+<%- include('partials/footer') %>

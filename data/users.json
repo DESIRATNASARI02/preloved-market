@@ -1,0 +1,17 @@
+[
+  {
+    "email": "seller@preloved.com",
+    "password": "password123",
+    "role": "seller"
+  },
+  {
+    "email": "seller2@preloved.com",
+    "password": "password123",
+    "role": "seller"
+  },
+  {
+    "email": "buyer@preloved.com",
+    "password": "password123",
+    "role": "buyer"
+  }
+]

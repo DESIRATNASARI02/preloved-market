@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+
+<div style="max-width:420px; margin:0 auto;">
+  <div class="card">
+    <h2>🔑 Masuk ke Akun</h2>
+
+    <% if (typeof errors !== 'undefined' && errors && errors.length > 0) { %>
+      <ul class="errors">
+        <% errors.forEach(e => { %><li><%= e %></li><% }) %>
+      </ul>
+    <% } %>
+
+    <form method="POST" action="/login">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" required placeholder="email@contoh.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%; padding:12px; font-size:15px;">Masuk</button>
+    </form>
+
+    <div style="border-top:1px solid #eee; margin-top:16px; padding-top:16px; font-size:13px; color:#888; text-align:center;">
+      <p><strong>Demo akun:</strong></p>
+      <p>Seller: seller@preloved.com | password123</p>
+      <p>Buyer: buyer@preloved.com | password123</p>
+    </div>
+
+    <p style="text-align:center; margin-top:16px; font-size:14px; color:#666;">
+      Belum punya akun? <a href="/register">Daftar di sini</a>
+    </p>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
