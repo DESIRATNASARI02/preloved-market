@@ -20,7 +20,7 @@ class AuthController {
   // POST /register
   static async register(req, res) {
     try {
-      const { email, password, name, phone, role } = req.body;
+      const { email, password, name, phone, address, role } = req.body;
  
       // validasi phone wajib untuk seller
       if (role === 'seller' && !phone) {
@@ -28,7 +28,7 @@ class AuthController {
       }
  
       const user = await User.create({ email, password, role: role || 'buyer' });
-      await UserProfile.create({ UserId: user.id, name, phone });
+      await UserProfile.create({ UserId: user.id, name, phone, address });
  
       res.redirect('/login');
     } catch (error) {

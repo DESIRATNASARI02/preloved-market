@@ -5,8 +5,8 @@ const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     // Static method
-    static async findByEmail(email) {
-      return await User.findOne({ where: { email } });
+    static findByEmail(email) {
+      return User.findOne({ where: { email } });
     }
  
     //Instance method - check password

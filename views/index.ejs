@@ -71,7 +71,7 @@
     <div style="margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
       <span style="font-size: 13px; color: #888;">Kategori:</span>
       <% tags.forEach(tag => { %>
-        <a href="/?search=<%= tag.name %>" style="padding: 5px 14px; background: #f0f4f8; border-radius: 20px; font-size: 13px; color: #2c3e50; text-decoration: none;">#<%= tag.name %></a>
+        <a href="/?tag=<%= tag.name %>" style="padding: 5px 14px; background: #f0f4f8; border-radius: 20px; font-size: 13px; color: #2c3e50; text-decoration: none;">#<%= tag.name %></a>
       <% }) %>
     </div>
   <% } %>

@@ -1,3 +1,10 @@
+<script>
+  // hapus query string dari URL tanpa reload
+  if (window.location.search) {
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+</script>
+
 <%- include('../partials/header') %>
 
 <div style="max-width:420px; margin:0 auto;">

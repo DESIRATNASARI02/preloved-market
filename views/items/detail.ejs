@@ -59,12 +59,20 @@
         </div>
       <% } else if (currentUser.role === 'buyer') { %>
         <div style="margin-top:20px;">
-          <a href="https://wa.me/<%= item.User.UserProfile.phone %>?text=Halo%2C%20saya%20tertarik%20dengan%20<%= encodeURIComponent(item.name) %>%20seharga%20<%= encodeURIComponent(formatRupiah(item.price)) %>" 
-            target="_blank" 
-            class="btn btn-success" 
-            style="width:100%; text-align:center; padding:14px; font-size:15px;">
-            💬 Hubungi via WhatsApp
-          </a>
+          <% if (item.User && item.User.UserProfile && item.User.UserProfile.phone) { %>
+            <a href="https://wa.me/<%= item.User.UserProfile.phone %>?text=Halo%2C%20saya%20tertarik%20dengan%20<%= encodeURIComponent(item.name) %>%20seharga%20<%= encodeURIComponent(formatRupiah(item.price)) %>" 
+              target="_blank" 
+              class="btn btn-success" 
+              style="width:100%; text-align:center; padding:14px; font-size:15px;">
+              💬 Hubungi via WhatsApp
+            </a>
+          <% } else { %>
+            <a href="mailto:<%= item.User.email %>" 
+              class="btn btn-success" 
+              style="width:100%; text-align:center; padding:14px; font-size:15px;">
+              📩 Hubungi via Email
+            </a>
+          <% } %>
         </div>
       <% } %>
     </div>

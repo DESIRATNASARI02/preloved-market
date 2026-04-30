@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: { msg: 'Harga tidak boleh kosong' },
-        min: { args: [0], msg: 'Harga tidak boleh negatif' }
+        min: { args: [1000], msg: 'Harga minimal Rp 1.000' }
       }
     },
     stock: { type: DataTypes.INTEGER, defaultValue: 1 },

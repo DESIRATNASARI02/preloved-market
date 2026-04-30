@@ -23,7 +23,7 @@ const upload = multer({
     const allowed = /jpeg|jpg|png|webp/;
     const ext = allowed.test(path.extname(file.originalname).toLowerCase());
     if (ext) return cb(null, true);
-    cb(new Error('Hanya file gambar yang diizinkan (jpg, png, webp)'));
+    cb(new Error('Hanya file gambar yang diizinkan (jpg png webp)'));
   }
 }).single('image');
  
@@ -32,7 +32,7 @@ class ItemController {
   // GET /
   static async index(req, res) {
     try {
-      const { search, sort, message, errors } = req.query;
+      const { search, sort, message, errors, tag } = req.query;
       const where = {};
       const order = [];
  
@@ -56,7 +56,10 @@ class ItemController {
         order,
         include: [
           { model: User, include: [UserProfile] },
-          { model: Tag }
+          {
+            model: Tag,
+            ...(tag && { where: { name: tag } })
+          }
         ]
       });
  
@@ -68,6 +71,7 @@ class ItemController {
         tags,
         search,
         sort,
+        tag,
         message,
         errors,
         formatRupiah,
@@ -81,6 +85,7 @@ class ItemController {
         tags: [],
         search: '',
         sort: '',
+        tag: '',
         message: null,
         errors: error.message,
         formatRupiah,
